@@ -1,15 +1,11 @@
 <?php
-declare(strict_types=1);
 namespace Lamansky\Fraction\Test;
-
-require_once __DIR__ . "/../src/Fraction.php";
-
 use Lamansky\Fraction\Fraction;
 use PHPUnit\Framework\TestCase;
 
 final class FractionTest extends TestCase {
 
-    public function testMethods() : void {
+    public function testMethods () : void {
         $f = new Fraction(1, 2);
         $this->assertEquals(false, $f->isNegative());
         $this->assertEquals(0, $f->getMixedInteger());
@@ -22,7 +18,7 @@ final class FractionTest extends TestCase {
         $this->assertNotEquals(1.5, $f->toFloat());
     }
 
-    public function testFractionFromFloats() : void {
+    public function testFractionFromFloats () : void {
         $f = new Fraction(1, 1.5);
         $this->assertEquals(2, $f->getNumerator());
         $this->assertEquals(3, $f->getDenominator());
@@ -32,38 +28,38 @@ final class FractionTest extends TestCase {
         $this->assertEquals(1, $f->getDenominator());
     }
 
-    public function test_fromFloat() : void {
+    public function testFromFloat () : void {
         $f = Fraction::fromFloat(0.5);
         $this->assertEquals(1, $f->getNumerator());
         $this->assertEquals(2, $f->getDenominator());
     }
 
-    public function testFractionSimplification() : void {
+    public function testFractionSimplification () : void {
         $f = new Fraction(4, 6);
         $this->assertEquals(2, $f->getNumerator());
         $this->assertEquals(3, $f->getDenominator());
     }
 
-    public function testLargerNumerator() : void {
+    public function testLargerNumerator () : void {
         $f = new Fraction(40, 20);
         $this->assertEquals(2, $f->getNumerator());
         $this->assertEquals(1, $f->getDenominator());
         $this->assertEquals(2, $f->toFloat());
     }
 
-    public function testZeroNumerator() : void {
+    public function testZeroNumerator () : void {
         $f = new Fraction(0, 5);
         $this->assertEquals(0, $f->getNumerator());
         $this->assertEquals(1, $f->getDenominator());
         $this->assertEquals(0, $f->toFloat());
     }
 
-    public function testZeroDenominator() : void {
+    public function testZeroDenominator () : void {
         $this->expectException(\RangeException::class);
-        $f = new Fraction(10, 0);
+        new Fraction(10, 0);
     }
 
-    public function testMixedFractions() : void {
+    public function testMixedFractions () : void {
         $f = new Fraction(3, 2);
         $this->assertEquals(3, $f->getNumerator());
         $this->assertEquals(2, $f->getDenominator());
@@ -74,7 +70,7 @@ final class FractionTest extends TestCase {
         $this->assertEquals([1, 1, 2], $f->getMixedParts());
     }
 
-    public function testNegativeFractions() : void {
+    public function testNegativeFractions () : void {
         $fs = [
             new Fraction(2, -4),
             new Fraction(2, 4, true),
@@ -88,7 +84,7 @@ final class FractionTest extends TestCase {
         }
     }
 
-    public function test_clone() : void {
+    public function testClone () : void {
         $f1 = new Fraction(1, 2);
         $this->assertEquals(false, $f1->isNegative());
         $this->assertEquals(1, $f1->getNumerator());
@@ -100,7 +96,7 @@ final class FractionTest extends TestCase {
         $this->assertEquals(2, $f2->getDenominator());
     }
 
-    public function test_absolute() : void {
+    public function testAbsolute () : void {
         $f1 = new Fraction(1, 2, true);
         $this->assertEquals(true, $f1->isNegative());
         $this->assertEquals(1, $f1->getNumerator());
@@ -112,7 +108,7 @@ final class FractionTest extends TestCase {
         $this->assertEquals(2, $f2->getDenominator());
     }
 
-    public function test_toString() : void {
+    public function testToString () : void {
         $this->assertEquals('1/2', (new Fraction(1, 2))->toString());
 
         $this->assertEquals('1/3', (new Fraction(1, 3))->toString());
@@ -155,10 +151,9 @@ final class FractionTest extends TestCase {
 
         $this->assertEquals('1234567890/12345678901', (new Fraction(1234567890, 12345678901))->toString());
         $this->assertEquals((new Fraction(-2, 43))->toString(), '-2/43');
-
     }
 
-    public function test_toUnicodeString() : void {
+    public function testToUnicodeString () : void {
         $this->assertEquals('½', (new Fraction(1, 2))->toUnicodeString());
 
         $this->assertEquals('⅓', (new Fraction(1, 3))->toUnicodeString());
@@ -200,28 +195,27 @@ final class FractionTest extends TestCase {
 
         $this->assertEquals('¹²³⁴⁵⁶⁷⁸⁹⁰⁄₁₂₃₄₅₆₇₈₉₀₁', (new Fraction(1234567890, 12345678901))->toUnicodeString());
         $this->assertEquals((new Fraction(-2, 43))->toUnicodeString(), '−²⁄₄₃');
-
     }
 
-    public function test_add() : void {
+    public function testAdd () : void {
         $f = (new Fraction(2, 3))->add(new Fraction(1, 4));
         $this->assertEquals($f->getNumerator(), 11);
         $this->assertEquals($f->getDenominator(), 12);
     }
 
-    public function test_subtract() : void {
+    public function testSubtract () : void {
         $f = (new Fraction(2, 3))->subtract(new Fraction(2, 8));
         $this->assertEquals($f->getNumerator(), 5);
         $this->assertEquals($f->getDenominator(), 12);
     }
 
-    public function test_multiply() : void {
+    public function testMultiply () : void {
         $f = (new Fraction(1, 2))->multiply(new Fraction(4, 16));
         $this->assertEquals($f->getNumerator(), 1);
         $this->assertEquals($f->getDenominator(), 8);
     }
 
-    public function test_divide() : void {
+    public function testDivide () : void {
         $f = (new Fraction(1, 2))->divide(new Fraction(1, 4));
         $this->assertEquals($f->getNumerator(), 2);
         $this->assertEquals($f->getDenominator(), 1);
